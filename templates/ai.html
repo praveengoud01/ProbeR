@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}AI Detector{% endblock %}
+{% block content %}
+<h1>🤖 AI Threat Detector</h1>
+
+<div class="card">
+    <h3>Model Status</h3>
+    <p>{{ 'Model loaded from models/prober_model.pkl ✅' if model_loaded else 'No trained model found yet ❌' }}</p>
+    <form method="POST" action="{{ url_for('ai_train') }}">
+        <input type="submit" value="{{ 'Retrain Model on Current Traffic' if model_loaded else 'Train Model Now' }}">
+    </form>
+</div>
+
+<div class="card">
+    <h3>Classification Results</h3>
+    {% if error %}
+        <p class="muted">{{ error }}</p>
+    {% elif results %}
+        <table>
+            <tr><th>Source</th><th>Destination</th><th>Port</th><th>Protocol</th><th>Verdict</th></tr>
+            {% for r in results %}
+            <tr>
+                <td>{{ r.src }}</td>
+                <td>{{ r.dst }}</td>
+                <td>{{ r.port }}</td>
+                <td>{{ r.protocol }}</td>
+                <td>
+                    {% if r.anomaly %}<span class="badge badge-high">Suspicious</span>
+                    {% else %}<span class="badge badge-normal">Normal</span>{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="muted">Train the model to see classification results.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Port Analysis{% endblock %}
+{% block content %}
+<h1>🔎 Port Activity Analysis</h1>
+<div class="card">
+    {% if error %}
+        <p class="muted">{{ error }}</p>
+    {% elif ports %}
+        <table>
+            <tr><th>Destination Port</th><th>Packet Count</th></tr>
+            {% for port, count in ports %}
+            <tr><td>{{ port }}</td><td>{{ count }}</td></tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="muted">No traffic data found in data/traffic.csv yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

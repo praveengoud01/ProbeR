@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Live Monitor{% endblock %}
+{% block content %}
+<h1>📡 Live Threat Monitor</h1>
+<p class="muted">Demo feed &mdash; cycles simulated alerts client-side, matching the original monitoring/live_monitoring.py logic. For real traffic, run capture/packet_capture.py and refresh the dashboard.</p>
+<div class="card">
+    <div id="feed" style="min-height:220px; font-size:1.05em; line-height:1.9;"></div>
+</div>
+<script>
+    const alerts = [
+        "Normal Traffic",
+        "HTTPS Connection",
+        "DNS Request",
+        "Port Scan Detected",
+        "Suspicious IP Detected"
+    ];
+    const feed = document.getElementById("feed");
+    function addAlert() {
+        const pick = alerts[Math.floor(Math.random() * alerts.length)];
+        const line = document.createElement("div");
+        const time = new Date().toLocaleTimeString();
+        line.textContent = "[" + time + "] [ALERT] " + pick;
+        feed.prepend(line);
+        while (feed.childNodes.length > 15) {
+            feed.removeChild(feed.lastChild);
+        }
+    }
+    addAlert();
+    setInterval(addAlert, 3000);
+</script>
+{% endblock %}

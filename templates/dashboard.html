@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>🛡 System Status</h1>
+<div class="stat-grid">
+    <div class="stat-box"><div class="num">✅</div>Database Online</div>
+    <div class="stat-box"><div class="num">✅</div>AI Engine {{ 'Ready' if model_loaded else 'Not Trained' }}</div>
+    <div class="stat-box"><div class="num">{{ total_threats }}</div>Total Threats</div>
+    <div class="stat-box"><div class="num">{{ high_threats }}</div>High Risk</div>
+</div>
+
+<div class="card">
+    <h3>Top Attacker</h3>
+    {% if top_attacker %}
+        <p>Most targeted IP: <b>{{ top_attacker[0] }}</b> &mdash; {{ top_attacker[1] }} threat(s)</p>
+    {% else %}
+        <p class="muted">No threats recorded yet.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>Threat Level Breakdown</h3>
+    {% if level_counts %}
+    <table>
+        <tr><th>Level</th><th>Count</th></tr>
+        {% for level, count in level_counts %}
+        <tr><td>{{ level }}</td><td>{{ count }}</td></tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p class="muted">No data yet.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>Recent Threats</h3>
+    {% if threats %}
+    <table>
+        <tr><th>ID</th><th>Source</th><th>Destination</th><th>Level</th></tr>
+        {% for t in threats %}
+        <tr>
+            <td>{{ t[0] }}</td>
+            <td>{{ t[1] }}</td>
+            <td>{{ t[2] }}</td>
+            <td>
+                {% if t[3] == 'HIGH' %}<span class="badge badge-high">HIGH</span>
+                {% elif t[3] == 'MEDIUM' %}<span class="badge badge-medium">MEDIUM</span>
+                {% else %}<span class="badge badge-low">{{ t[3] }}</span>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p class="muted">No threats stored in the database yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

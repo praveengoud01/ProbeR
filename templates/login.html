@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div style="max-width:380px;margin:60px auto;text-align:center;">
+    <h1>🔐 ProbeR Login</h1>
+    <form method="POST" class="card" style="text-align:left;">
+        <p>Username</p>
+        <input type="text" name="username" autofocus required>
+        <p>Password</p>
+        <input type="password" name="password" required>
+        <br><br>
+        <input type="submit" value="Login">
+    </form>
+    <p class="muted">Default demo credentials are set via environment variables.<br>See README for setup.</p>
+</div>
+{% endblock %}

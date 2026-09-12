@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Risk Score{% endblock %}
+{% block content %}
+<h1>⚠️ Network Risk Score</h1>
+<div class="card">
+    {% if error %}
+        <p class="muted">{{ error }}</p>
+    {% else %}
+        <div class="stat-grid">
+            <div class="stat-box"><div class="num">{{ risk_score }}</div>Risk Score</div>
+            <div class="stat-box">
+                <div class="num">
+                    {% if status == 'SAFE' %}<span class="badge badge-low">SAFE</span>
+                    {% elif status == 'WARNING' %}<span class="badge badge-medium">WARNING</span>
+                    {% else %}<span class="badge badge-high">HIGH RISK</span>{% endif %}
+                </div>
+                Status
+            </div>
+        </div>
+        <p class="muted" style="margin-top:16px;">Score is +10 for every distinct non-standard port (i.e. not 80/443/53) seen in the captured traffic.</p>
+    {% endif %}
+</div>
+{% endblock %}

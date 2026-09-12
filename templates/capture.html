@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Packet Capture{% endblock %}
+{% block content %}
+<h1>📥 Packet Capture</h1>
+<div class="card">
+    <p>Live packet sniffing needs raw-socket access (root/administrator) and a blocking capture loop, so it
+    isn't triggered from a web request. Run it separately from a terminal with elevated privileges:</p>
+    <pre style="background:#000;padding:14px;border:1px solid #226622;border-radius:6px;overflow-x:auto;">sudo python3 capture/packet_capture.py</pre>
+    <p class="muted">This appends captured packets to data/traffic.csv, which the Ports, Risk, and AI Detector
+    pages read from automatically. Requires <code>scapy</code> and a supported interface/driver
+    (libpcap on Linux/macOS, Npcap on Windows).</p>
+</div>
+{% endblock %}

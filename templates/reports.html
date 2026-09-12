@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<h1>📊 Reports & Exports</h1>
+
+<div class="card">
+    <h3>Text Report</h3>
+    <p class="muted">Writes a plain-text summary of every stored threat.</p>
+    <form method="POST" action="{{ url_for('generate_report') }}">
+        <input type="submit" value="Generate Report">
+    </form>
+    {% if report_exists %}
+        <p style="margin-top:10px;"><a class="btn" href="{{ url_for('download_report') }}">Download security_report.txt</a></p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>CSV Export</h3>
+    <p class="muted">Exports all stored threats as a CSV file.</p>
+    <form method="POST" action="{{ url_for('export_csv') }}">
+        <input type="submit" value="Generate CSV">
+    </form>
+    {% if csv_exists %}
+        <p style="margin-top:10px;"><a class="btn" href="{{ url_for('download_csv') }}">Download threats_export.csv</a></p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>Threat Severity Chart</h3>
+    <p class="muted">Pie chart of threats grouped by severity level.</p>
+    <form method="POST" action="{{ url_for('generate_chart') }}">
+        <input type="submit" value="Generate Chart">
+    </form>
+    {% if chart_exists %}
+        <p style="margin-top:14px;"><img src="{{ url_for('view_chart') }}" style="max-width:100%;border:1px solid #226622;border-radius:6px;"></p>
+    {% endif %}
+</div>
+{% endblock %}
